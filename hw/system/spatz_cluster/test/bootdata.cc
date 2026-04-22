@@ -1,1 +1,1 @@
-../src/generated/bootdata.cc
+bootdata_bootrom.cc

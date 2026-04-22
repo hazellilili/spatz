@@ -23,3 +23,9 @@ for {set core 0}  {$core < [examine -radix dec spatz_cluster_pkg::NumCores]} {in
 
 # Add cluster waves
 add wave -noupdate -group Cluster /tb_bin/i_dut/i_cluster_wrapper/i_cluster/*
+
+add wave -group cluster_xbar /tb_bin/i_dut/i_cluster_wrapper/i_cluster/i_tcdm_interconnect/*
+
+add wave -group ls_insn /tb_bin/i_dut/i_cluster_wrapper/i_cluster/gen_core[0]/i_spatz_cc/i_spatz/i_vlsu/spatz_mem_finished_o
+add wave -group ls_insn /tb_bin/i_dut/i_cluster_wrapper/i_cluster/gen_core[0]/i_spatz_cc/i_spatz/i_vlsu/spatz_mem_str_finished_o
+add wave -group ls_insn /tb_bin/i_dut/i_cluster_wrapper/i_cluster/gen_core[0]/i_spatz_cc/i_spatz/i_controller/spatz_req_o

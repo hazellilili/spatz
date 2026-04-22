@@ -72,6 +72,14 @@ macro(add_spatz_test_threeParam_type name file param1 param2 param3 type)
   add_snitch_test(${target_name} ${file})
   target_link_libraries(test-${SNITCH_TEST_PREFIX}${target_name} benchmark ${SNITCH_RUNTIME})
   target_compile_definitions(test-${SNITCH_TEST_PREFIX}${target_name} PUBLIC DATAHEADER="data/data_${param1}_${param2}_${param3}_${type}.h" PREC=${type} SNRT_NFPU_PER_CORE=${SNRT_NFPU_PER_CORE})
+
+
+# for dummy-tests without parameters
+  macro(add_spatz_test name file)
+  set(target_name ${name})
+  add_snitch_test(${target_name} ${file})
+  target_link_libraries(test-${SNITCH_TEST_PREFIX}${target_name} benchmark ${SNITCH_RUNTIME})
+  target_compile_definitions(test-${SNITCH_TEST_PREFIX}${target_name} PUBLIC DATAHEADER="data/data.h" SNRT_NFPU_PER_CORE=${SNRT_NFPU_PER_CORE})
 endmacro()
 
 # Benchmark library
@@ -101,6 +109,11 @@ add_library(sdotp-hp-fmatmul sdotp-hp-fmatmul/kernel/sdotp-fmatmul.c)
 add_library(sdotp-bp-fmatmul sdotp-bp-fmatmul/kernel/sdotp-fmatmul.c)
 
 add_library(sp-fft sp-fft/kernel/fft.c)
+
+add_library(dummy-vload dummy-vload/kernel/vload.c)
+add_library(dummy-vstore dummy-vstore/kernel/vstore.c)
+add_library(dummy-vadd dummy-vadd/kernel/vadd.c)
+
 
 # Tests
 enable_testing()
@@ -153,3 +166,7 @@ add_spatz_test_twoParam_type(hp-gemv gemv/main.c 256 128 16)
 
 add_spatz_test_twoParam(sp-fft sp-fft/main.c 256 2)
 add_spatz_test_twoParam(sp-fft sp-fft/main.c 512 2)
+
+add_spatz_test(dummy-vload dummy-vload/main.c)
+add_spatz_test(dummy-vstore dummy-vstore/main.c)
+add_spatz_test(dummy-vadd dummy-vadd/main.c)
